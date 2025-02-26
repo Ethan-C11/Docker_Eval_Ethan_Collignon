@@ -1,0 +1,11 @@
+FROM node:22
+
+COPY package.json .
+
+RUN npm install -y
+
+COPY front.js .
+
+EXPOSE 3001
+
+ENTRYPOINT npm run front
