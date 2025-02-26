@@ -8,7 +8,7 @@ const app = express();
 const port = 3000;
 
 
-const logger = winston.createLogger({
+const logger = winston.createLogger({ // creation logger
     transports: [
         new winston.transports.File({ filename: '/app/logs/app.log' }),
         new winston.transports.Console()
