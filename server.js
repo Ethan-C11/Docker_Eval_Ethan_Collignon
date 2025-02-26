@@ -15,7 +15,7 @@ const logger = winston.createLogger({ // creation logger
     ]
 });
 
-app.use(expressWinston.logger({ // creation logger
+app.use(expressWinston.logger({ // creation logger winston
     transports: [
         new winston.transports.Console(),
         new winston.transports.File({ filename: '/app/logs/requests.log' })
