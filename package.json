@@ -1,0 +1,13 @@
+{
+  "name": "mns",
+  "version": "1.0.0",
+  "description": "A simple Express server that returns the current time",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "redis": "^4.7.0"
+  }
+}

@@ -1,0 +1,49 @@
+services:
+  application-eval:
+    container_name: application-eval
+    build: .
+    restart: unless-stopped
+    networks:
+      - backend
+      - proxy
+    depends_on:
+      - database
+
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: nginx:1.27
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./reverse-proxy.conf:/etc/nginx/templates/default.conf.template
+    networks:
+      - proxy
+    depends_on:
+      - application-eval
+      - static
+
+  database:
+    container_name: database
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - data_redis:/data
+    networks:
+      - backend
+
+  static:
+    container_name: static
+    image: nginx:1.27
+    volumes:
+      - ./assets:/usr/share/nginx/html
+    networks:
+      - proxy
+
+volumes:
+  data_redis:
+
+networks:
+  backend:
+  proxy:
+
