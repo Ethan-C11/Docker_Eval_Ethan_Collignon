@@ -1,13 +1,28 @@
 services:
   application-eval:
     container_name: application-eval
-    build: .
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
     restart: unless-stopped
+    volumes:
+      - logs:/app/logs
     networks:
       - backend
       - proxy
     depends_on:
-      - database
+      - db
+
+  front-end:
+    container_name: front-end
+    build:
+      dockerfile: Dockerfile-Front
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    depends_on:
+      - application-eval
 
   reverse-proxy:
     container_name: reverse-proxy
@@ -23,8 +38,8 @@ services:
       - application-eval
       - static
 
-  database:
-    container_name: database
+  db:
+    container_name: db
     image: redis:7
     restart: unless-stopped
     volumes:
@@ -42,6 +57,7 @@ services:
 
 volumes:
   data_redis:
+  logs:
 
 networks:
   backend:
